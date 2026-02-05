@@ -1,36 +1,129 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Crypto Options Trader
+
+Professional-grade crypto options trading platform powered by Binance European Options API.
+
+**Live Demo:** https://crypto-options-trader.vercel.app
+
+## Features
+
+### Market Data (No API Key Required)
+- Browse all available options contracts (BTC, ETH)
+- Options chain grouped by expiration and strike
+- Real-time price updates via WebSocket
+- Greeks display (Delta, Gamma, Theta, Vega, IV)
+- Candlestick charts with multiple intervals
+- Order book depth visualization
+- Recent trades feed
+
+### Trading (API Key Required)
+- Place limit and market orders
+- View account balance and equity
+- Track open positions with P&L
+- Manage open orders
+- Portfolio Greeks aggregation
+
+## Screenshots
+
+### Options Chain
+View all available strikes and expirations at a glance with real-time bid/ask prices.
+
+### Contract Details
+Select any contract to see detailed information including Greeks, IV, and 24h stats.
+
+### Trading Panel
+Full trading interface with order book, price chart, and order form.
+
+## Tech Stack
+
+- **Framework:** Next.js 14+ (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS + shadcn/ui
+- **State:** Zustand
+- **Charts:** TradingView Lightweight Charts v5
+- **API:** Binance European Options API (EAPI)
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+- Node.js 18+
+- pnpm (recommended) or npm
+
+### Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+# Clone the repository
+git clone https://github.com/hookdump/crypto-options-trader.git
+cd crypto-options-trader
+
+# Install dependencies
+pnpm install
+
+# Start development server
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 to view the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Enable Trading
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+To enable trading features, create a `.env.local` file:
 
-## Learn More
+```bash
+BINANCE_API_KEY=your_api_key_here
+BINANCE_API_SECRET=your_api_secret_here
+```
 
-To learn more about Next.js, take a look at the following resources:
+**Important:**
+- Create your API keys at https://www.binance.com/en/my/settings/api-management
+- Enable "European Options" permission
+- Never enable withdrawal permissions
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This project is configured for automatic deployment to Vercel. Push to `main` to trigger a new deployment.
 
-## Deploy on Vercel
+For manual deployment:
+```bash
+vercel --prod
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Add environment variables in Vercel dashboard for trading functionality.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Project Structure
+
+```
+app/
+├── page.tsx              # Main options chain view
+├── trade/page.tsx        # Trading panel
+├── positions/page.tsx    # Positions & account view
+├── settings/page.tsx     # API configuration
+└── api/                  # Server-side API routes
+
+components/
+├── options-chain.tsx     # Options matrix table
+├── order-book.tsx        # Depth visualization
+├── price-chart.tsx       # Candlestick chart
+├── order-form.tsx        # Trading form
+└── ...
+
+lib/
+├── binance-api.ts        # REST API client
+├── websocket-manager.ts  # WebSocket handler
+├── store.ts              # Zustand state management
+└── types.ts              # TypeScript definitions
+```
+
+## API Documentation
+
+This app uses the Binance European Options API:
+- REST API: `https://eapi.binance.com`
+- WebSocket: `wss://nbstream.binance.com/eoptions`
+- [Official Documentation](https://developers.binance.com/docs/derivatives/options-trading/general-info)
+
+## License
+
+MIT
+
+## Disclaimer
+
+This software is for educational and informational purposes only. Trading crypto derivatives involves substantial risk of loss. Use at your own risk.
